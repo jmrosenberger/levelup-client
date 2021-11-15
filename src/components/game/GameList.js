@@ -15,7 +15,7 @@ export const GameList = (props) => {
     return (
         <article className="games">
             <h2>Games List</h2>
-            <button className="btn btn-2 btn-sep icon-create"
+            <button className="btn-2 btn-sep icon-create"
                 onClick={() => {
                     history.push({ pathname: "/games/new" })
                 }}
