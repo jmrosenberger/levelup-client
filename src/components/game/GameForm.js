@@ -39,17 +39,21 @@ export const GameForm = () => {
         One hint: [event.target.name]
     */
 
-    const handleInputChange = (event) => {
-        const newGame = Object.assign({}, currentGame)
-        newGame[event.target.name] = event.target.value
-        setCurrentGame(newGame)
+    // const handleInputChange = (event) => {
+    //     const newGame = Object.assign({}, currentGame)
+    //     newGame[event.target.name] = event.target.value
+    //     setCurrentGame(newGame)
+    // }
+
+
+
+    const changeGameState = (event) => {
+        const newGameState = { ...currentGame }
+        newGameState[event.target.name] = event.target.value
+        setCurrentGame(newGameState)
     }
 
-    // const changeGameTitleState = (event) => {
-    //     const newGameState = { ...currentGame }
-    //     newGameState.title = event.target.value
-    //     setCurrentGame(newGameState)
-    // }
+    console.log(currentGame)
 
     // const changeGameMakerState = (event) => {
     //     const newGameState = { ...currentGame }
@@ -84,7 +88,7 @@ export const GameForm = () => {
                     <label htmlFor="title">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentGame?.title}
-                        onChange={handleInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -93,7 +97,7 @@ export const GameForm = () => {
                     <label htmlFor="maker">Maker: </label>
                     <input type="text" name="maker" required autoFocus className="form-control"
                         value={currentGame?.maker}
-                        onChange={handleInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -102,7 +106,7 @@ export const GameForm = () => {
                     <label htmlFor="numberOfPlayers">Number Of Players: </label>
                     <input type="number" name="numberOfPlayers" required autoFocus className="form-control"
                         value={currentGame?.numberOfPlayers}
-                        onChange={handleInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -111,7 +115,7 @@ export const GameForm = () => {
                     <label htmlFor="skillLevel">Skill Level: </label>
                     <input type="number" name="skillLevel" required autoFocus className="form-control"
                         value={currentGame?.skillLevel}
-                        onChange={handleInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -119,12 +123,13 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="gameType">Game Type: </label>
                     <select type="text" name="gameTypeId" placeholder="Select Game Type" className="form-control"
-                        onChange={handleInputChange}>
-                        <option value={parseInt(currentGame?.game_type?.id)}>{currentGame?.game_type?.label}</option>
+                        defaultValue={0}
+                        onChange={changeGameState}>
+                        <option value={0} disabled>Select Game Type</option>
                         {
                             gameTypes.map(
                                 (gameType) => {
-                                <option name="gameTypeId" value={gameType.id}>{gameType.label}</option>})
+                                    return <option name="gameTypeId" value={gameType.id}>{gameType.label}</option>})
                         }
                     </select>
                 </div>

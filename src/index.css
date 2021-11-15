@@ -11,9 +11,31 @@ body, button, input, select, textarea {
     margin: 0;
 }
 
+.event, .game {
+	border: 2px dotted seagreen;
+	padding: .5rem;
+	margin: 2rem auto;
+	border-radius: 8px;
+	background-color: rgb(252, 170, 170);
+	font-weight: bold;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: "Patua One", serif;
     letter-spacing: 2px;
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+.form-control {
+	border: 2px solid olivedrab;
+}
+
+label {
+	color: darkblue;
+	font-weight: bold;
 }
 
 code {
@@ -93,6 +115,9 @@ code {
 .btn-1 {
 	background: #3498db;
 	color: #fff;
+	border-radius: 8px;
+	border: 4px ridge olivedrab;
+	margin-top: 4rem;
 }
 
 .btn-1:hover {
@@ -118,6 +143,9 @@ code {
 .btn-2 {
 	background: #2ecc71;
 	color: #fff;
+	border-radius: 8px;
+	padding: .5rem;
+	margin: 2rem 0;
 }
 
 .btn-2:hover {

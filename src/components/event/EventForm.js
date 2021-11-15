@@ -23,10 +23,12 @@ export const EventForm = () => {
 
     const changeEventState = (event) => {
         // TODO: Complete the onChange function
-        const newEvent = Object.assign({}, currentEvent)
+        const newEvent = { ...currentEvent}
         newEvent[event.target.name] = event.target.value
         setEvent(newEvent)
     }
+
+    console.log(currentEvent)
 
     return (
         <form className="gameForm">
@@ -54,7 +56,7 @@ export const EventForm = () => {
                     <label htmlFor="description">Description: </label>
                     <input type="text" name="description" required autoFocus className="form-control"
                         value={currentEvent?.description}
-                        onchange={changeEventState}/>
+                        onChange={changeEventState}/>
                 </div>
             </fieldset>
             <fieldset>
@@ -98,7 +100,7 @@ export const EventForm = () => {
                         .then(() => history.push("/events"))
                     }
                 }}
-                className="btn btn-primary">Create Event</button>
+                className="btn btn-1">Create Event</button>
         </form>
     )
 }
