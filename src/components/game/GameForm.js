@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { useHistory, useParams } from 'react-router-dom'
-import { createGame, getGameTypes } from './GameManager.js'
-
+import { createGame, getGame, getGameTypes, updateGame } from './GameManager.js'
+import "./Games.css"
 
 export const GameForm = () => {
     const history = useHistory()
     const [gameTypes, setGameTypes] = useState([])
     // const [currentGame, setCurrentGame] = useState({})
+    // const [game, setGameState] = useState({})
     const { gameId } = useParams()
 
     /*
@@ -23,26 +24,28 @@ export const GameForm = () => {
     })
 
     useEffect(() => {
+        if (gameId) {
+            getGame(gameId).then((gameData) => setCurrentGame({
+                ...gameData,
+                skillLevel: gameData.skill_level,
+                numberOfPlayers: gameData.number_of_players,
+                gameTypeId: gameData.game_type.id
+            }))
+        }
+    }, [gameId])
+
+    useEffect(() => {
         // TODO: Get the game types, then set the state
         getGameTypes()
             .then(data => setGameTypes(data))
     }, [])
 
-    /*
-        REFACTOR CHALLENGE START
+    // const editGame = (event) => {
+    //     event.preventDefault()
 
-        Can you refactor this code so that all property
-        state changes can be handled with a single function
-        instead of five functions that all, largely, do
-        the same thing?
-
-        One hint: [event.target.name]
-    */
-
-    // const handleInputChange = (event) => {
-    //     const newGame = Object.assign({}, currentGame)
-    //     newGame[event.target.name] = event.target.value
-    //     setCurrentGame(newGame)
+    //     updateGame(game).then(() => {
+    //         history.push('/')
+    //     })
     // }
 
 
@@ -55,30 +58,19 @@ export const GameForm = () => {
 
     console.log(currentGame)
 
-    // const changeGameMakerState = (event) => {
-    //     const newGameState = { ...currentGame }
-    //     newGameState.maker = event.target.value
-    //     setCurrentGame(newGameState)
-    // }
+    const submitNewGame = (evt) => {
+        evt.preventDefault()
 
-    // const changeGamePlayersState = (event) => {
-    //     const newGameState = { ...currentGame }
-    //     newGameState.numberOfPlayers = event.target.value
-    //     setCurrentGame(newGameState)
-    // }
-
-    // const changeGameSkillLevelState = (event) => {
-    //     const newGameState = { ...currentGame }
-    //     newGameState.skillLevel = event.target.value
-    //     setCurrentGame(newGameState)
-    // }
-
-    // const changeGameTypeState = (event) => {
-    //     const newGameState = { ...currentGame }
-    //     newGameState.gameTypeId = event.target.value
-    //     setCurrentGame(newGameState)
-    // }
-    /* REFACTOR CHALLENGE END */
+        const newGame = {
+            maker: currentGame.maker,
+            title: currentGame.title,
+            numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+            skillLevel: parseInt(currentGame.skillLevel),
+            gameTypeId: parseInt(currentGame.gameTypeId)
+        }
+        createGame(newGame)
+            .then(() => history.push("/games"))
+    }
 
     return (
         <form className="gameForm">
@@ -122,10 +114,11 @@ export const GameForm = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="gameType">Game Type: </label>
-                    <select type="text" name="gameTypeId" placeholder="Select Game Type" className="form-control"
-                        defaultValue={0}
+                    <select name="gameTypeId" placeholder="Select Game Type" className="form-control"
+                        value={currentGame?.gameTypeId}
+                        // placeholder="Select Game Type"
                         onChange={changeGameState}>
-                        <option value={0} disabled>Select Game Type</option>
+                        <option value="0" disabled>Select Game Type</option>
                         {
                             gameTypes.map(
                                 (gameType) => {
@@ -138,23 +131,8 @@ export const GameForm = () => {
             {/* TODO: create the rest of the input fields */}
 
             <button type="submit"
-                onClick={evt => {
-                    // Prevent form from being submitted
-                    evt.preventDefault()
-
-                    const game = {
-                        maker: currentGame.maker,
-                        title: currentGame.title,
-                        numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                        skillLevel: parseInt(currentGame.skillLevel),
-                        gameTypeId: parseInt(currentGame.gameTypeId)
-                    }
-
-                    // Send POST request to your API
-                    createGame(game)
-                        .then(() => history.push("/games"))
-                }}
-                className="btn btn-primary">Create</button>
+                onClick={submitNewGame}
+                className="btn btn-primary btn__submit">Save Game</button>
         </form>
     )
 }

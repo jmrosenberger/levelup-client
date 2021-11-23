@@ -101,6 +101,15 @@ code {
 	-webkit-font-smoothing: antialiased;
 }
 
+.btn__submit {
+	border: 2px solid rgb(99, 120, 59);
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 2rem 35% 2rem 35%;
+    background-color: rgb(146, 249, 249);
+	color: rgb(0, 0, 199);
+}
+
 
 /* Icon separator */
 .btn-sep {
