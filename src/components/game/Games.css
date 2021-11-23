@@ -1,0 +1,16 @@
+
+.btn__delete {
+    margin-left: 2rem;
+    border: 1px solid blue;
+    border-radius: 4px;
+    padding: .15rem;
+    color: red;
+}
+
+.btn__submit {
+    border: 2px solid rgb(99, 120, 59);
+    border-radius: 5px;
+    padding: 2rem;
+    margin: 2rem 35% 2rem 35%;
+    background-color: aqua;
+}

@@ -36,8 +36,8 @@ export const leaveEvent = eventId => {
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
     })
-        .then(response => response.json())
-        .then(getEvents)
+        // .then(response => response.json())
+        // .then(getEvents)
 }
 
 export const joinEvent = eventId => {
@@ -48,5 +48,5 @@ export const joinEvent = eventId => {
         }
     })
         .then(response => response.json())
-        .then(getEvents)
+        // .then(getEvents)
 }

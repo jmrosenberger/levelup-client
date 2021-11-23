@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { getEvents, joinEvent, leaveEvent } from "./EventManager.js"
-// import "./Events.css"
+import "./Events.css"
 
 export const EventList = () => {
     const history = useHistory()
     const [ events, updateEvents ] = useState([])
 
     const eventFetcher = () => {
-        getEvents().then(data => updateEvents(data))
+        getEvents()
+            .then(data => updateEvents(data))
     }
 
     useEffect(() => {

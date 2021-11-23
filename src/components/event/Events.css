@@ -1,0 +1,7 @@
+.registration {
+    border: 2px dotted cadetblue;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1.5rem .25rem;
+    background-color: rgb(196, 232, 244);
+}
