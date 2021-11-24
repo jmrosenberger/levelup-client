@@ -1,7 +1,9 @@
 .navbar {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: left;
+    justify-content: space-around;
+    /* border: 2px solid greenyellow; */
+    font-size: larger;
 }
 
 .navbar__item {

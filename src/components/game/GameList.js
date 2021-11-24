@@ -63,7 +63,7 @@ export const GameList = (props) => {
                             }}>Delete Game</button>
                     </section>
 
-                })
+                }).reverse()
             }
 
         </article>
