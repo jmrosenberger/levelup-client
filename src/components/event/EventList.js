@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import { getEvents, joinEvent, leaveEvent } from "./EventManager.js"
 import "./Events.css"
 
@@ -43,6 +43,7 @@ export const EventList = () => {
                                     onClick={() => joinEvent(event.id).then(() => eventFetcher())}
                                     >Join</button>
                         }
+                        <Link to={`events/edit/${event.id}`}>Edit Event</Link>
                     </section>
                 })
             }

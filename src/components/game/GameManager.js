@@ -8,9 +8,9 @@ export const getGames = () => {
 }
 
 export const getGame = (gameId) => {
-    return fetch(`http:/localhost:8000/games/${gameId}`, {
+    return fetch(`http://localhost:8000/games/${gameId}`, {
         headers:{
-            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`,
         }
     })
         .then(res => res.json())
@@ -28,8 +28,8 @@ export const createGame = (game) => {
         .then(response => response.json())
 }
 
-export const updateGame = (game) => {
-    return fetch(`http://localhost:8000/games/${game.id}`, {
+export const updateGame = (game, gameId) => {
+    return fetch(`http://localhost:8000/games/${gameId}`, {
         method: "PUT",
         headers: {
             "Authorization": `Token ${localStorage.getItem("lu_token")}`,

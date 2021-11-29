@@ -1,0 +1,10 @@
+.attending {
+    background-color: aqua;
+    color: rgb(242, 100, 100);
+    border: none;
+}
+
+.hosting {
+    background-color: cornflowerblue;
+    color:rgb(212, 252, 8);
+}
