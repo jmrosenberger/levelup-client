@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react"
 import { ProfileContext } from "./ProfileProvider.js"
 import { getProfile } from "./ProfileManager.js"
-// import "./Profile.css"
+import "./Profile.css"
 
 
 export const Profile = () => {
@@ -35,7 +35,7 @@ export const Profile = () => {
                 <div className="registrations">
                     {
                         profile.attending?.map(event => {
-                            return <div key={event.id} className="registration">
+                            return <div key={event.id} className="registration attending">
                                 <div className="registration__game">{event.game.title}</div>
                                 <div>{event.description}</div>
                                 <div>
@@ -53,7 +53,7 @@ export const Profile = () => {
                 <div className="registrations">
                     {
                         profile.hosting?.map(event => {
-                            return <div key={event.id} className="registration">
+                            return <div key={event.id} className="registration hosting">
                                 <div className="registration__game">{event.game.title}</div>
                                 <div>{event.description}</div>
                                 <div>

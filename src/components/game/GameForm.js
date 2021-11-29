@@ -6,70 +6,45 @@ import "./Games.css"
 export const GameForm = () => {
     const history = useHistory()
     const [gameTypes, setGameTypes] = useState([])
-    // const [currentGame, setCurrentGame] = useState({})
-    // const [game, setGameState] = useState({})
+    const [currentGame, setCurrentGame] = useState({})
+    const [editMode, toggleEditMode] = useState(false)
     const { gameId } = useParams()
 
-    /*
-        Since the input fields are bound to the values of
-        the properties of this state variable, you need to
-        provide some default values.
-    */
-    const [currentGame, setCurrentGame] = useState({
-        skillLevel: 0,
-        numberOfPlayers: 0,
-        title: "",
-        maker: "",
-        gameTypeId: 0
-    })
-
     useEffect(() => {
-        if (gameId) {
-            getGame(gameId).then((gameData) => setCurrentGame({
-                ...gameData,
-                skillLevel: gameData.skill_level,
-                numberOfPlayers: gameData.number_of_players,
-                gameTypeId: gameData.game_type.id
-            }))
-        }
-    }, [gameId])
-
-    useEffect(() => {
-        // TODO: Get the game types, then set the state
         getGameTypes()
             .then(data => setGameTypes(data))
     }, [])
 
-    // const editGame = (event) => {
-    //     event.preventDefault()
+    const getGameToEdit = () => {
+        if (gameId) {
+            toggleEditMode(true)
+            getGame(gameId)
+                .then(gameData => setCurrentGame({
+                    ...gameData,
+                    skillLevel: gameData.skill_level,
+                    numberOfPlayers: gameData.number_of_players,
+                    gameTypeId: gameData.game_type.id
+                }))
+        } else {
+            setCurrentGame({
+                title: "",
+                maker: "",
+                numberOfPlayers: 0,
+                skillLevel: 0,
+                gameTypeId: 0
+            })
+        }
+    }
+    console.log(currentGame)
 
-    //     updateGame(game).then(() => {
-    //         history.push('/')
-    //     })
-    // }
-
-
+    useEffect(() => {
+        getGameToEdit()
+    }, [gameId])
 
     const changeGameState = (event) => {
         const newGameState = { ...currentGame }
         newGameState[event.target.name] = event.target.value
         setCurrentGame(newGameState)
-    }
-
-    console.log(currentGame)
-
-    const submitNewGame = (evt) => {
-        evt.preventDefault()
-
-        const newGame = {
-            maker: currentGame.maker,
-            title: currentGame.title,
-            numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-            skillLevel: parseInt(currentGame.skillLevel),
-            gameTypeId: parseInt(currentGame.gameTypeId)
-        }
-        createGame(newGame)
-            .then(() => history.push("/games"))
     }
 
     return (
@@ -79,7 +54,7 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
-                        value={currentGame?.title}
+                        value={currentGame.title}
                         onChange={changeGameState}
                     />
                 </div>
@@ -88,7 +63,7 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="maker">Maker: </label>
                     <input type="text" name="maker" required autoFocus className="form-control"
-                        value={currentGame?.maker}
+                        value={currentGame.maker}
                         onChange={changeGameState}
                     />
                 </div>
@@ -97,7 +72,7 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="numberOfPlayers">Number Of Players: </label>
                     <input type="number" name="numberOfPlayers" required autoFocus className="form-control"
-                        value={currentGame?.numberOfPlayers}
+                        value={currentGame.numberOfPlayers}
                         onChange={changeGameState}
                     />
                 </div>
@@ -106,7 +81,7 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="skillLevel">Skill Level: </label>
                     <input type="number" name="skillLevel" required autoFocus className="form-control"
-                        value={currentGame?.skillLevel}
+                        value={currentGame.skillLevel}
                         onChange={changeGameState}
                     />
                 </div>
@@ -115,24 +90,37 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="gameType">Game Type: </label>
                     <select name="gameTypeId" placeholder="Select Game Type" className="form-control"
-                        value={currentGame?.gameTypeId}
-                        // placeholder="Select Game Type"
+                        value={currentGame.gameTypeId}
                         onChange={changeGameState}>
                         <option value="0" disabled>Select Game Type</option>
                         {
                             gameTypes.map(
                                 (gameType) => {
-                                    return <option name="gameTypeId" value={gameType.id}>{gameType.label}</option>})
+                                    return <option name="gameTypeId" value={gameType.id}>{gameType.label}</option>
+                                })
                         }
                     </select>
                 </div>
             </fieldset>
+            <button onClick={(event) => {
+                event.preventDefault()
 
-            {/* TODO: create the rest of the input fields */}
-
-            <button type="submit"
-                onClick={submitNewGame}
-                className="btn btn-primary btn__submit">Save Game</button>
+                const game = {
+                    maker: currentGame.maker,
+                    title: currentGame.title,
+                    numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+                    skillLevel: parseInt(currentGame.skillLevel),
+                    gameTypeId: parseInt(currentGame.gameTypeId)
+                }
+                {
+                    editMode ? 
+                        updateGame(game, gameId)
+                            .then(() => {history.push('/games')})
+                        : createGame(game)
+                            .then(() => {history.push('/games')})
+                }
+            }}
+            className="btn btn-primary">Save Game</button>
         </form>
     )
 }
